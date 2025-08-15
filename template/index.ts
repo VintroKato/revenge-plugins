@@ -1,27 +1,13 @@
-// src/index.ts
-import { Plugin } from "revenge";
-import { Patcher, DiscordModules } from "revenge";
-
-const MessageInterceptor: Plugin = {
-  name: "MessageInterceptor",
-  author: "Vintro",
-  description: "Добавляет [Intercepted] к началу каждого входящего сообщения.",
-  version: "1.0.0",
-
-  onLoad() {
-    Patcher.after(DiscordModules.MessageStore, "getMessages", (_, args, messages) => {
-      for (const [id, msg] of messages) {
-        if (!msg.content.startsWith("[Intercepted]")) {
-          msg.content = `[Intercepted] ${msg.content}`;
+module.exports = {
+    onLoad() {
+        try {
+            console.log("Плагин загружен");
+        } catch (e) {
+            console.error("Ошибка при onLoad:", e);
+            window.Revenge?.showToast?.("Ошибка в плагине: " + e.message);
         }
-      }
-      return messages;
-    });
-  },
-
-  onUnload() {
-    Patcher.unpatchAll();
-  },
+    },
+    onUnload() {
+        console.log("Плагин выгружен");
+    }
 };
-
-export default MessageInterceptor;
