@@ -1,13 +1,10 @@
-module.exports = {
-    onLoad() {
-        try {
-            console.log("Плагин загружен");
-        } catch (e) {
-            console.error("Ошибка при onLoad:", e);
-            window.Revenge?.showToast?.("Ошибка в плагине: " + e.message);
-        }
+import { logger } from "@vendetta";
+
+export default {
+    onLoad: () => {
+        logger.log("Hello world!");
     },
-    onUnload() {
-        console.log("Плагин выгружен");
+    onUnload: () => {
+        logger.log("Goodbye, world.");
     }
-};
+}
